@@ -1,0 +1,501 @@
+<script type="text/x-red" data-template-name="fs-copy-move">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-fw fa-tag"></i> <span data-i18n="fs-copy-move.label.name"></span></label>
+        <input type="text" id="node-input-name"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-oper"><i class="fa fa-fw fa-cogs"></i> <span data-i18n="fs-copy-move.label.oper"></span></label>
+        <select type="text" id="node-input-oper">
+            <option value="cp" data-i18n="fs-copy-move.label.oper-copy"></option>
+            <option value="mv" data-i18n="fs-copy-move.label.oper-move"></option>
+            <option value="ln" data-i18n="fs-copy-move.label.oper-link"></option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-srcPath"><i class="fa fa-fw fa-folder"></i> <span data-i18n="fs-copy-move.label.src-path"></span></label>
+        <input type="text" id="node-input-srcPath">
+        <input type="hidden" id="node-input-srcPathType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-srcFilename"><i class="fa fa-fw fa-file"></i> <span data-i18n="fs-copy-move.label.src-filename"></span></label>
+        <input type="text" id="node-input-srcFilename">
+        <input type="hidden" id="node-input-srcFilenameType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-dstPath"><i class="fa fa-fw fa-folder"></i> <span data-i18n="fs-copy-move.label.dst-path"></span></label>
+        <input type="text" id="node-input-dstPath">
+        <input type="hidden" id="node-input-dstPathType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-dstFilename"><i class="fa fa-fw fa-file"></i> <span data-i18n="fs-copy-move.label.dst-filename"></span></label>
+        <input type="text" id="node-input-dstFilename">
+        <input type="hidden" id="node-input-dstFilenameType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-overwrite"><i class="fa fa-fw fa-eraser"></i> <span data-i18n="fs-copy-move.label.overwrite"></span></label>
+        <input type="checkbox" id="node-input-overwrite" style="width:auto; vertical-align:top"/>
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('fs-copy-move', {
+        category: 'storage',
+        defaults: {
+            oper: { value: 'cp' },
+            srcPath: { value: '' },
+            srcPathType: { value: 'str' },
+            srcFilename: { value: 'source', required: true },
+            srcFilenameType: { value: 'msg' },
+            dstPath: { value: '' },
+            dstPathType: { value: 'str' },
+            dstFilename: { value: 'destination' },
+            dstFilenameType: { value: 'msg' },
+            overwrite: { value: true },
+            name: { value: '' },
+        },
+        color: '#DAC4B4',
+        inputs: 1,
+        outputs: 1,
+        icon: 'fs-copy.svg',
+        label: function() {
+            return this.name ||  {'':'FS Copy/Move/Link', 'cp':'FS Copy', 'mv':'FS Move', 'ln':'FS Link'}[this.oper];
+        },
+        labelStyle: function() {
+            return this.name ? 'node_label_italic' : ''
+        },
+        paletteLabel: 'fs copy/move',
+        oneditprepare: function() {
+            $('#node-input-srcPath').typedInput({
+                types: ['msg', 'flow', 'global', 'str', 'env'],
+                typeField: $('#node-input-srcPathType')
+            });
+            $('#node-input-srcFilename').typedInput({
+                types: ['msg', 'flow', 'global', 'str'],
+                typeField: $('#node-input-srcFilenameType')
+            });
+            $('#node-input-dstPath').typedInput({
+                types: ['msg', 'flow', 'global', 'str', 'env'],
+                typeField: $('#node-input-dstPathType')
+            });
+            $('#node-input-dstFilename').typedInput({
+                types: ['msg', 'flow', 'global', 'str'],
+                typeField: $('#node-input-dstFilenameType')
+            });
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="fs-remove">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-fw fa-tag"></i> <span data-i18n="fs-remove.label.name"></span></label>
+        <input type="text" id="node-input-name"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-path"><i class="fa fa-fw fa-folder"></i> <span data-i18n="fs-remove.label.path"></span></label>
+        <input type="text" id="node-input-path">
+        <input type="hidden" id="node-input-pathType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-filename"><i class="fa fa-fw fa-file"></i> <span data-i18n="fs-remove.label.filename"></span></label>
+        <input type="text" id="node-input-filename">
+        <input type="hidden" id="node-input-filenameType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-recursive"><i class="fa fa-fw fa-refresh"></i> <span data-i18n="fs-remove.label.recursive"></span></label>
+        <input type="checkbox" id="node-input-recursive" style="width:auto; vertical-align:top"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-exist"><i class="fa fa-fw fa-exclamation"></i> <span data-i18n="fs-remove.label.exist"></span></label>
+        <input type="checkbox" id="node-input-exist" style="width:auto; vertical-align:top"/>
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('fs-remove', {
+        category: 'storage',
+        defaults: {
+            path: { value: '' },
+            pathType: { value: 'str' },
+            filename: { value: 'filename', required: true },
+            filenameType: { value: 'msg' },
+            recursive: { value: true },
+            exist: { value: false },
+            name: { value: '' },
+        },
+        color: '#DAC4B4',
+        inputs: 1,
+        outputs: 1,
+        icon: 'fs-remove.svg',
+        label: function() {
+            return this.name ||'FS Remove'
+        },
+        labelStyle: function() {
+            return this.name ? 'node_label_italic' : ''
+        },
+        paletteLabel: 'fs remove',
+        oneditprepare: function() {
+            $('#node-input-path').typedInput({
+                types: ['msg', 'flow', 'global', 'str', 'env'],
+                typeField: $('#node-input-pathType')
+            });
+            $('#node-input-filename').typedInput({
+                types: ['msg', 'flow', 'global', 'str'],
+                typeField: $('#node-input-filenameType')
+            });
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="fs-mkdir">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-fw fa-tag"></i> <span data-i18n="fs-mkdir.label.name"></span></label>
+        <input type="text" id="node-input-name"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-purpose"><i class="fa fa-fw fa-folder-open"></i> <span data-i18n="fs-mkdir.label.purpose"></span></label>
+        <span class="button-group">
+            <button type="button" id="node-input-reg" value="reg" class="editor-button toggle button-group-purpose" style="width:7em" data-i18n="fs-mkdir.label.purpose-reg">
+            </button><button type="button" id="node-input-tmp" value="tmp" class="editor-button toggle button-group-purpose" style="width:7em" data-i18n="fs-mkdir.label.purpose-tmp">
+            </button>
+        </span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-path"><i class="fa fa-fw fa-folder"></i> <span data-i18n="fs-mkdir.label.path"></span></label>
+        <input type="text" id="node-input-path">
+        <input type="hidden" id="node-input-pathType">
+    </div>
+    <div class="form-row purpose-reg-row">
+        <label for="node-input-foldername"><i class="fa fa-fw fa-folder"></i> <span data-i18n="fs-mkdir.label.foldername"></span></label>
+        <input type="text" id="node-input-foldername">
+        <input type="hidden" id="node-input-foldernameType">
+    </div>
+    <div class="form-row purpose-tmp-row">
+        <label for="node-input-prefix"><i class="fa fa-fw fa-folder"></i> <span data-i18n="fs-mkdir.label.prefix"></span></label>
+        <input type="text" id="node-input-prefix">
+        <input type="hidden" id="node-input-prefixType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-recursive"><i class="fa fa-fw fa-refresh"></i> <span data-i18n="fs-mkdir.label.recursive"></span></label>
+        <input type="checkbox" id="node-input-recursive" style="width:auto; vertical-align:top"/>
+    </div>
+    <div class="form-row purpose-reg-row">
+        <label for="node-input-exists"><i class="fa fa-fw fa-exclamation"></i> <span data-i18n="fs-mkdir.label.exists"></span></label>
+        <input type="checkbox" id="node-input-exists" style="width:auto; vertical-align:top"/>
+    </div>
+    <div class="form-row purpose-reg-row">
+        <label for="node-input-mode"><i class="fa fa-fw fa-lock"></i> <span data-i18n="fs-mkdir.label.mode"></span></label>
+        <input type="text" id="node-input-mode">
+        <input type="hidden" id="node-input-modeType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-property"><i class="fa fa-fw fa-list-ul"></i> <span data-i18n="fs-mkdir.label.property"></span></label>
+        <input type="text" id="node-input-property">
+        <input type="hidden" id="node-input-propertyType">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('fs-mkdir', {
+        category: 'storage',
+        defaults: {
+            name: { value: '' },
+            purpose: { value: 'reg' },
+            path: { value: '' },
+            pathType: { value: 'str' },
+            foldername: { value: 'payload', required: function(){return this.purpose == 'reg'} },
+            foldernameType: { value: 'msg' },
+            recursive: { value: true },
+            exists: { value: true },
+            prefix: { value: '' },
+            prefixType: { value: 'str' },
+            mode: { value: '777', required: function(){return this.purpose == 'reg'}, validate: function(v){return this.purpose == 'tmp' || /[0-7]{3}/.test(v)} },
+            property: { value: 'payload' },
+            propertyType: { value: 'msg' }
+        },
+        color: '#DAC4B4',
+        inputs: 1,
+        outputs: 1,
+        icon: 'fs-mkdir.svg',
+        label: function() {
+            return this.name || (this.purpose == 'reg' ? 'FS Make Regular Folder' : 'FS Make Temporary Folder')
+        },
+        labelStyle: function() {
+            return this.name ? 'node_label_italic' : ''
+        },
+        paletteLabel: 'fs mkdir',
+        oneditprepare: function() {
+            $('.button-group-purpose').on('click', function() {
+                $('.button-group-purpose').removeClass('selected');
+                $(this).addClass('selected');
+                if (this.value == 'reg') {
+                    $('.purpose-reg-row').show();
+                    $('.purpose-tmp-row').hide();
+                } else {
+                    $('.purpose-reg-row').hide();
+                    $('.purpose-tmp-row').show();
+                }
+            });
+            $('#node-input-path').typedInput({
+                types: ['msg', 'flow', 'global', 'str', 'env'],
+                typeField: $('#node-input-pathType')
+            });
+            $('#node-input-foldername').typedInput({
+                types: ['msg', 'flow', 'global', 'str'],
+                typeField: $('#node-input-foldernameType')
+            });
+            $('#node-input-prefix').typedInput({
+                types: ['msg', 'flow', 'global', 'str'],
+                typeField: $('#node-input-prefixType')
+            });
+            $('#node-input-rights').typedInput({
+                types: ['msg', 'flow', 'global', 'str'],
+                typeField: $('#node-input-rightsType')
+            });
+            $('#node-input-property').typedInput({
+                types: ['msg', 'flow', 'global'],
+                typeField: $('#node-input-propertyType')
+            });
+            $('.button-group-purpose[value="' + this.purpose + '"]').click();
+        },
+        oneditsave: function() {
+            this.purpose = $('.button-group-purpose.selected').attr('value');
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="fs-list">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-fw fa-tag"></i> <span data-i18n="fs-list.label.name"></span></label>
+        <input type="text" id="node-input-name"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-path"><i class="fa fa-fw fa-folder"></i> <span data-i18n="fs-list.label.path"></span></label>
+        <input type="text" id="node-input-path">
+        <input type="hidden" id="node-input-pathType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-pattern"><i class="fa fa-fw fa-filter"></i> <span data-i18n="fs-list.label.pattern"></span></label>
+        <input type="text" id="node-input-pattern">
+        <input type="hidden" id="node-input-patternType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-filter-all"><i class="fa fa-fw fa-filter"></i> <span data-i18n="fs-list.label.filter"></span></label>
+        <input type="radio" id="node-input-filter-all" name="node-input-filter" value="all" style="width:auto; vertical-align:top">
+        <label for="node-input-filter-all" style="width:auto;margin-left:0.3em; margin-right:1em">all</label>
+        <input type="radio" id="node-input-filter-files" name="node-input-filter" value="files" style="width:auto; vertical-align:top">
+        <label for="node-input-filter-files" style="width:auto;margin-left:0.3em; margin-right:1em">files only</label>
+        <input type="radio" id="node-input-filter-folders" name="node-input-filter" value="folders" style="width:auto; vertical-align:top">
+        <label for="node-input-filter-folders" style="width:auto; margin-left:0.3em">folders only</label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-recursive"><i class="fa fa-fw fa-refresh"></i> <span data-i18n="fs-list.label.recursive"></span></label>
+        <input type="checkbox" id="node-input-recursive" style="width:auto; vertical-align:top"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-follow"><i class="fa fa-fw fa-link"></i> <span data-i18n="fs-list.label.follow"></span></label>
+        <input type="checkbox" id="node-input-follow" style="width:auto; vertical-align:top"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-property"><i class="fa fa-fw fa-list-ul"></i> <span data-i18n="fs-list.label.property"></span></label>
+        <input type="text" id="node-input-property">
+        <input type="hidden" id="node-input-propertyType">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('fs-list', {
+        category: 'storage',
+        defaults: {
+            name: { value: '' },
+            path: { value: 'payload' },
+            pathType: { value: 'msg' },
+            pattern: { value: '*', require: true },
+            patternType: { value: 'str' },
+            filter: { value: 'all' },
+            recursive: { value: false },
+            follow: { value: true },
+            property: { value: 'list', required: true },
+            propertyType: { value: 'msg' }
+        },
+        color: '#DAC4B4',
+        inputs: 1,
+        outputs: 1,
+        icon: 'fs-list.svg',
+        label: function() {
+            return this.name ||'FS List'
+        },
+        labelStyle: function() {
+            return this.name ? 'node_label_italic' : ''
+        },
+        paletteLabel: 'fs list',
+        oneditprepare: function() {
+            $('#node-input-path').typedInput({
+                types: ['msg', 'flow', 'global', 'str', 'env'],
+                typeField: $('#node-input-pathType')
+            });
+            $('#node-input-pattern').typedInput({
+                types: ['msg', 'flow', 'global', 'str'],
+                typeField: $('#node-input-patternType')
+            });
+            $('#node-input-property').typedInput({
+                types: ['msg', 'flow', 'global'],
+                typeField: $('#node-input-propertyType')
+            });
+            $('#node-input-filter-' + this.filter).click();
+        },
+        oneditsave: function() {
+            this.filter = $('input[name="node-input-filter"]:checked').attr('value');
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="fs-stats">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-fw fa-tag"></i> <span data-i18n="fs-stats.label.name"></span></label>
+        <input type="text" id="node-input-name"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-path"><i class="fa fa-fw fa-folder"></i> <span data-i18n="fs-stats.label.path"></span></label>
+        <input type="text" id="node-input-path">
+        <input type="hidden" id="node-input-pathType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-filename"><i class="fa fa-fw fa-file"></i> <span data-i18n="fs-stats.label.filename"></span></label>
+        <input type="text" id="node-input-filename">
+        <input type="hidden" id="node-input-filenameType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-attr"><i class="fa fa-fw fa-filter"></i> <span data-i18n="fs-stats.label.attrs"></span></label>
+        <select type="text" id="node-input-attr">
+            <option value="" data-i18n="fs-stats.label.attr-all"></option>
+            <option value="basic" data-i18n="fs-stats.label.attr-basic"></option>
+            <option value="size" data-i18n="fs-stats.label.attr-size"></option>
+            <option value="kind" data-i18n="fs-stats.label.attr-kind"></option>
+            <option value="ctimeMs" data-i18n="fs-stats.label.attr-ctimeu"></option>
+            <option value="mtimeMs" data-i18n="fs-stats.label.attr-mtimeu"></option>
+            <option value="atimeMs" data-i18n="fs-stats.label.attr-atimeu"></option>
+            <option value="ctime" data-i18n="fs-stats.label.attr-ctimes"></option>
+            <option value="mtime" data-i18n="fs-stats.label.attr-mtimes"></option>
+            <option value="atime" data-i18n="fs-stats.label.attr-atimes"></option>
+            <option value="uid" data-i18n="fs-stats.label.attr-uid"></option>
+            <option value="gid" data-i18n="fs-stats.label.attr-gid"></option>
+            <option value="mode" data-i18n="fs-stats.label.attr-mode"></option>
+            <option value="rights" data-i18n="fs-stats.label.attr-rights"></option>
+            <option value="mime" data-i18n="fs-stats.label.attr-mime"></option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-follow"><i class="fa fa-fw fa-link"></i> <span data-i18n="fs-stats.label.follow"></span></label>
+        <input type="checkbox" id="node-input-follow" style="width:auto; vertical-align:top"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-property"><i class="fa fa-fw fa-list-ul"></i> <span data-i18n="fs-stats.label.property"></span></label>
+        <input type="text" id="node-input-property">
+        <input type="hidden" id="node-input-propertyType">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('fs-stats', {
+        category: 'storage',
+        defaults: {
+            name: { value: '' },
+            path: { value: '' },
+            pathType: { value: 'str' },
+            filename: { value: 'filename', required: true },
+            filenameType: { value: 'msg' },
+            attr: { value: '' },
+            follow: { value: true },
+            property: { value: 'stats', required: true },
+            propertyType: { value: 'msg' }
+        },
+        color: '#DAC4B4',
+        inputs: 1,
+        outputs: 1,
+        icon: 'fs-stats.svg',
+        label: function() {
+            return this.name ||'FS Stats'
+        },
+        labelStyle: function() {
+            return this.name ? 'node_label_italic' : ''
+        },
+        paletteLabel: 'fs stats',
+        oneditprepare: function() {
+            $('#node-input-path').typedInput({
+                types: ['msg', 'flow', 'global', 'str', 'env'],
+                typeField: $('#node-input-pathType')
+            });
+            $('#node-input-filename').typedInput({
+                types: ['msg', 'flow', 'global', 'str'],
+                typeField: $('#node-input-filenameType')
+            });
+            $('#node-input-property').typedInput({
+                types: ['msg', 'flow', 'global'],
+                typeField: $('#node-input-propertyType')
+            });
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="fs-access">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-fw fa-tag"></i> <span data-i18n="fs-access.label.name"></span></label>
+        <input type="text" id="node-input-name"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-path"><i class="fa fa-fw fa-folder"></i> <span data-i18n="fs-access.label.path"></span></label>
+        <input type="text" id="node-input-path">
+        <input type="hidden" id="node-input-pathType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-filename"><i class="fa fa-fw fa-file"></i> <span data-i18n="fs-access.label.filename"></span></label>
+        <input type="text" id="node-input-filename">
+        <input type="hidden" id="node-input-filenameType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-accessRead"><i class="fa fa-fw fa-question-circle"></i> <span data-i18n="fs-access.label.access"></span></label>
+        <input type="checkbox" id="node-input-accessRead" style="width:auto; vertical-align:top"/>
+        <label for="node-input-accessRead" style="width:4.7em; padding-left:0.3em"><span data-i18n="fs-access.label.read"></span></label>
+        <input type="checkbox" id="node-input-accessWrite" style="width:auto; vertical-align:top"/>
+        <label for="node-input-accessWrite" style="width:4.7em; padding-left:0.3em"><span data-i18n="fs-access.label.write"></span></label>
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('fs-access', {
+        category: 'storage',
+        defaults: {
+            name: { value: '' },
+            path: { value: '' },
+            pathType: { value: 'str' },
+            filename: { value: 'filename', required: true },
+            filenameType: { value: 'msg' },
+            accessRead: { value: true },
+            accessWrite: { value: false }
+        },
+        color: '#DAC4B4',
+        inputs: 1,
+        outputs: 2,
+        icon: 'fs-access.svg',
+        outputLabels: function(i) {
+            return this._('fs-access.label.' + ['accessible', 'non-accessible'][i])
+        },
+        label: function() {
+            return this.name ||'FS Access'
+        },
+        labelStyle: function() {
+            return this.name ? 'node_label_italic' : ''
+        },
+        paletteLabel: 'fs access',
+        oneditprepare: function() {
+            $('#node-input-path').typedInput({
+                types: ['msg', 'flow', 'global', 'str', 'env'],
+                typeField: $('#node-input-pathType')
+            });
+            $('#node-input-filename').typedInput({
+                types: ['msg', 'flow', 'global', 'str'],
+                typeField: $('#node-input-filenameType')
+            });
+        }
+    });
+</script>

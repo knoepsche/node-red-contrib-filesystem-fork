@@ -1,0 +1,155 @@
+<script type="text/x-red" data-help-name="fs-copy-move">
+    <p>Copies/Moves/Links the files/folders. It can work with a single file or a whole tree.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>srcPath <span class="property-type">string</span></dt>
+        <dd>The path to the source file/folder you want to copy/move/link. It is used when the <code>srcFilename</code> value is relative and then both items are joined.<br/>The <em>Src Path</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+        <dt>srcFilename <span class="property-type">string</span></dt>
+        <dd>The filename of the source file/folder you want to copy/move/link. It can include a path. The relative value will be joined with the path property.<br/>The <em>Src Fname</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+        <dt>destPath <span class="property-type">string</span></dt>
+        <dd>The target path for the copy/move/link operation. It is used when the <code>destFilename</code> value is relative and then both items are joined.<br/>The <em>Dest Path</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+        <dt>destFilename <span class="property-type">string</span></dt>
+        <dd>The target filename for the copy/move/link opeartion. It can include a path. The relative value will be joined with the path property.<br/>The <em>Dest Fname</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+    </dl>
+    <h3>Details</h3>
+    <p><strong style="color:white;background-color:#ad1625"> ! </strong> It is necessary to distinguish between file and folder in some cases. The user then needs to use path separator after the folder name. For example on Linux: When you copy /foo/doc.txt to /bar/dest it will produce file /bar/dest, otherwise when you copy to /bar/dest<strong style="color:#ad1625">/</strong> it will produce file /bar/dest/doc.txt.</p>
+    <p>If the source is a <strong>folder</strong> and the destination is a <strong>folder</strong>, the source folder with the whole subtree will be copied/moved/linked to the destination folder with the original names.</p>
+    <p>If the source is a <strong>file</strong> and the destination is a <strong>folder</strong>, the source file will be copied/moved/linked to the destination folder with the original name.</p>
+    <p>If the source is a <strong>file</strong> and the destination is a <strong>file</strong>, the source file will be copied/moved/linked with the new name.</p>
+    <p>If the source is a <strong>globbing expression</strong> (name with wildcards) and the destination is a <strong>folder</strong>, the matched files from source folder will be copied/moved/linked to the destination folder with the original names.</p>
+    <p>Other combinations of source/destination are not applicable.</p>
+    <p>Missing folders will be created, e.g. when a file is copied to the unexisting folder.</p>
+    <p>If <em>Overwrite</em> is not checked and the target already exists, it will cause an error. It is possible to use <em>catch</em> node for it.</p>
+    <p>Created links are always symbolic.</p>
+    <p>If <em>Src Fname</em> (<em>Dst Fname</em>) is absolute, only that is used. If it is relative, it is combined with <em>Src Path</em> (<em>Dst Path</em>). If the path is not presented (or it is also relative), the current working folder is used.</p>
+    <h3>References</h3>
+    <ul>
+        <li>Official <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">documentation</a> on Gitlab.</li>
+    </ul>
+</script>
+
+<script type="text/x-red" data-help-name="fs-remove">
+    <p>Removes files/folders. It can work recursively.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>path <span class="property-type">string</span></dt>
+        <dd>The path to the file/folder you want to remove. It is used when the <code>filename</code> value is relative and then both items are joined.<br/>The <em>Path</em> field must be set to <code>msg.</code> to use a message property and then the user can configure the property name.</dd>
+        <dt>filename <span class="property-type">string</span></dt>
+        <dd>The filename of the file/folder you want to remove. It can include a path. The relative value will be joined with the path property.<br/>The <em>Filename</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+    </dl>
+    <h3>Details</h3>
+    <p>It si possible to use the standard globing expressions (wild cards) for specifing multiple files to remove.</p>
+    <p>If <em>Recursive</em> is not checked and removing requires to remove a folder tree, it will cause an error. It is possible to use <em>catch</em> for it.</p>
+    <p>If <em>Must exist</em> is chceked and the target does not exist, it will cause an error. It is possible to use <em>catch</em> for it.</p>
+    <p>If <em>Filename</em> is absolute, only that is used. If it is relative, it is combined with <em>Path</em>. If the path is not presented (or it is also relative), the current working folder is used.</p>
+    <h3>References</h3>
+    <ul>
+        <li>Official <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">documentation</a> on Gitlab.</li>
+    </ul>
+</script>
+
+<script type="text/x-red" data-help-name="fs-mkdir">
+    <p>Creates folders. It can work recursively.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>path <span class="property-type">string</span></dt>
+        <dd>The path where to create the folder. It is used when the <code>foldername</code> value is relative and then both items are joined.<br/>The <em>Path</em> field must be set to <code>msg.</code> to use a message property and then the user can configure the property name.</dd>
+        <dt>foldername <span class="property-type">string</span></dt>
+        <dd>The foldername of the folder to create. It can include a path. The relative value will be joined with the path property.<br/>The <em>Foldername</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+        <dt>prefix <span class="property-type">string</span></dt>
+        <dd>The foldername prefix of the temporary folder to create. It can include a path. The relative value will be joined with the path property.<br/>A radnom string will be added after the prefix to get a unique result name.<br/>The <em>Name prefix</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">strings</span></dt>
+        <dd>Result full path; it is useful mainly for a temporary path with a generated random name.<br/>The <em>Result to</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+    </dl>
+    <h3>Details</h3>
+    <p>Temporary folders are ensured to have a unique randomly generated name optionaly with your prefix.</p>
+    <p>If the path of the temporary folder is not specified the system temporary folder will be used.</p>
+    <p>if <em>Err on Exist</em> is checked and a folder with the same name alreay exists, it will cause an error. If <em>Recursive</em> is not checked and creation requires to create more folder levels, it will cause an error too. It is possible to use <em>catch</em> for the errors.</p>
+    <p>If <em>Foldername</em> is absolute, only that is used. If it is relative, it is combined with <em>Path</em>. If the path is not presented (or it is also relative), the current working folder is used.</p>
+    <h3>References</h3>
+    <ul>
+        <li>Official <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">documentation</a> on Gitlab.</li>
+    </ul>
+</script>
+
+<script type="text/x-red" data-help-name="fs-list">
+    <p>Lists the content of the folder. It is possible to filter the results by name pattern and type (file vs. folder).</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>path <span class="property-type">string</span></dt>
+        <dd>The path to the folder you want to list.<br/>The <em>Path</em> field must be set to <code>msg.</code> to use a message property and then the user can configure the property name.</dd>
+        <dt>pattern <span class="property-type">string</span></dt>
+        <dd>Pattern of looking up filenames.<br/>The <em>Pattern</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>list <span class="property-type">array of strings</span></dt>
+        <dd>List of found files/folders.<br/>The <em>Result to</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+    </dl>
+    <h3>Details</h3>
+    <p>Checked <em>Recursive</em> causes looking up in the subfolders.</p>
+    <p><em>Follow Links</em> ensures following the symbolick links.</p>
+    <p>Note that the <em>Recursive</em> and <em>Follow Links</em> options can produce a very large array for a deep tree of folders.</p>
+    <h3>References</h3>
+    <ul>
+        <li>Official <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">documentation</a> on Gitlab.</li>
+    </ul>
+</script>
+
+<script type="text/x-red" data-help-name="fs-stats">
+    <p>Reports details about a file/folder. You can get all properties or just a single property.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>path <span class="property-type">string</span></dt>
+        <dd>The path to the file you want to get details. It is used when the <code>filename</code> value is relative and then both items are joined.<br/>The <em>Path</em> field must be set to <code>msg.</code> to use a message property and then the user can configure the property name.</dd>
+        <dt>filename <span class="property-type">string</span></dt>
+        <dd>The filename of the file you want to get details. It can include a path. The relative value will be joined with the path property.<br/>The <em>Filename</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>stats <span class="property-type">object or string or number</span></dt>
+        <dd>The user will get Object for all attributes and String or Number for a requested single attribute.<br/>The <em>Result to</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+    </dl>
+    <h3>Details</h3>
+    <p>The <em>All basic</em> option in <em>Attributes</em> means the attributes returned directly by the stats() function. <em>All</em> adds the several extended details.</p>
+    <p>The <em>kind</em> attribute is one of <code>file</code>, <code>folder</code>, <code>character</code>, <code>block</code>, <code>pipe</code>, <code>link</code>, <code>socket</code>.</p>
+    <p>The timestamp strings have the ISO 8601 format, e.g. 2021-11-18T17:14:58.000Z.</p>
+    <p>When <em>Follow Links</em> is checked, the node will probe a linked target, otherwise the link itself.</p>
+    <p>If <em>Filename</em> is absolute, only that is used. If it is relative, it is combined with <em>Path</em>. If the path is not presented (or it is also relative), the current working folder is used.</p>
+    <h3>References</h3>
+    <ul>
+        <li>Official <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">documentation</a> on Gitlab</li>
+        <li><a href="https://en.wikipedia.org/wiki/Media_type">MIME Type</a> description on Wikipedia</li>
+        <li><a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> description on Wikipedia</li>
+    </ul>
+</script>
+
+<script type="text/x-red" data-help-name="fs-access">
+    <p>Tests if your flow has access to file/folder for see, read, write.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>path <span class="property-type">string</span></dt>
+        <dd>The path to the file you want to test. It is used when the <code>filename</code> value is relative and then both items are joined.<br/>The <em>Path</em> field must be set to <code>msg.</code> to use a message property and then the user can configure the property name.</dd>
+        <dt>filename <span class="property-type">string</span></dt>
+        <dd>The filename of the file you want to test. It can include a path. The relative value will be joined with the path property.<br/>The <em>Filename</em> field must be set to <code>msg.</code> to use a message property and then the user can configure property name.</dd>
+    </dl>
+    <h3>Output</h3>
+    <ol class="node-ports">
+         <li>accessible
+             <div>The untouched original <code>msg</code> when the tested file IS accessible according the given criteria.</div>
+         </li>
+         <li>inaccessible
+             <div>The untouched original <code>msg</code> when the tested file IS NOT accessible according the given criteria.</div>
+         </li>
+    </ol>
+    <h3>Details</h3>
+    <p>The write access means you can modify content of the file. The read access means you can read content of the file. If you have both options unchecked, it examines if you can see the existence of the file. If you check a folder, the read access means to list content and write access to create/delete inside.</p>
+    <p>If <em>Filename</em> is absolute, only that is used. If it is relative, it is combined with <em>Path</em>. If the path is not presented (or it is also relative), the current working folder is used.</p>
+    <h3>References</h3>
+    <ul>
+        <li>Official <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">documentation</a> on Gitlab.</li>
+    </ul>
+</script>

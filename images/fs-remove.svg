@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="40.292999mm"
+   height="8.1370001mm"
+   viewBox="0 0 40.292998 8.1370005"
+   version="1.1"
+   id="svg1284"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs1278" />
+  <metadata
+     id="metadata1281">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <path
+     id="rect892"
+     style="display:inline;fill:#cfbaab;fill-opacity:1;stroke:#999999;stroke-width:0.119494;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"
+     d="M 2.6971387,0.11949294 H 9.4099671 V 8.0175069 H 2.6971387 c -0.6445673,0 -1.1634788,-0.5189107 -1.1634788,-1.1634761 V 1.2829651 c 0,-0.64456156 0.5189115,-1.16347216 1.1634788,-1.16347216 z" />
+  <path
+     id="rect984"
+     style="display:inline;fill:#dac4b4;fill-opacity:1;stroke:#c4b0a2;stroke-width:0.119494;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"
+     d="M 9.3929222,0.11949447 H 37.591512 c 0.64457,0 1.163482,0.51891059 1.163482,1.16347213 v 5.5710657 c 0,0.6445654 -0.518912,1.1634761 -1.163482,1.1634761 H 9.3929222 Z" />
+  <path
+     id="rect25"
+     style="display:inline;fill:none;stroke:#999999;stroke-width:0.238986;stroke-linejoin:round;stop-color:#000000"
+     d="M 2.6971387,0.119493 H 37.591512 c 0.644568,0 1.16348,0.51890993 1.16348,1.1634751 v 5.5710638 c 0,0.6445653 -0.518912,1.1634752 -1.16348,1.1634752 H 2.6971387 c -0.6445683,0 -1.1634808,-0.5189099 -1.1634808,-1.1634752 V 1.2829681 c 0,-0.64456517 0.5189125,-1.1634751 1.1634808,-1.1634751 z" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:3.65341px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.105386"
+     x="11.49049"
+     y="5.1846976"
+     id="text982"><tspan
+       id="tspan980"
+       x="11.49049"
+       y="5.1846976"
+       style="font-size:3.65341px;stroke-width:0.105386">fs remove</tspan></text>
+  <rect
+     style="display:inline;fill:#dddddd;fill-opacity:1;stroke:#99999f;stroke-width:0.238987;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"
+     id="rect850"
+     width="2.7392623"
+     height="2.7392504"
+     x="0.1194935"
+     y="2.7153623"
+     ry="0.91356021" />
+  <rect
+     style="display:inline;fill:#dddddd;fill-opacity:1;stroke:#99999f;stroke-width:0.238987;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"
+     id="rect872"
+     width="2.7392623"
+     height="2.7392504"
+     x="37.434387"
+     y="2.7153623"
+     ry="0.91356021" />
+  <path
+     id="icon"
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.538587"
+     d="m 5.9221831,1.2184753 1.8525147,1.852516 H 5.9221831 Z m -2.4225219,0 V 6.9185246 H 7.7746978 V 3.498495 H 5.4946781 V 1.2184753 Z M 4.8893265,4.1483791 5.6146354,4.873688 6.340223,4.1483791 6.7371101,4.5449873 6.0115226,5.2705745 6.7371101,5.9961616 6.340223,6.3927717 5.6146354,5.6671845 4.8893265,6.3927717 4.4924396,5.9961616 5.218027,5.2705745 4.4924396,4.5449873 Z" />
+</svg>

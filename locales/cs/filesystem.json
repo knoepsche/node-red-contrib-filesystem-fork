@@ -1,0 +1,145 @@
+{
+    "fs": {
+        "status": {
+            "failed": "failed"
+        },
+        "error": {
+            "sep": ": ",
+            "property": "Neznámý kontext vlastnosti „%s“"
+        }
+    },
+    "fs-copy-move": {
+        "status": {
+            "running-cp": "kopíruje se",
+            "running-mv": "přesouvá se",
+            "running-ln": "vytváři se odkaz"
+        },
+        "label": {
+            "name": "Název",
+            "oper": "Operace",
+            "oper-copy": "zkopírovat",
+            "oper-move": "přesunout",
+            "oper-link": "vytvořit odkaz",
+            "src-path": "Zdr. cesta",
+            "src-filename": "Zdr. soubor",
+            "dst-path": "Cíl. cesta",
+            "dst-filename": "Cíl. soubor",
+            "overwrite": "Přepsat cíl"
+        },
+        "error": {
+            "empty": "Zdroj musí být uveden",
+            "pattern": "Selhalo získání seznamu souborů podle vzoru",
+            "failed-cp": "Kopírování „%s“ selhalo",
+            "failed-mv": "Přesouvání „%s“ selhalo",
+            "failed-ln": "Vytváření odkazu „%s“ selhalo"
+        }
+    },
+    "fs-remove": {
+        "status": {
+            "running": "odstraňuje se"
+        },
+        "label": {
+            "name": "Název",
+            "path": "Cesta",
+            "filename": "Soubor",
+            "recursive": "Rekurzivně",
+            "exist": "Musí existovat"
+        },
+        "error": {
+            "empty": "Cíl musí být zadán",
+            "pattern": "Selhalo získání seznamu souborů podle vzoru",
+            "notexists": "Soubor ani složka s názvem „%s“ neexistují",
+            "failed": "Odstranění „%s“ selhalo"
+        }
+    },
+    "fs-mkdir": {
+        "status": {
+            "running": "vytváří se"
+        },
+        "label": {
+            "name": "Název",
+            "purpose": "Účel",
+            "purpose-reg": "běžná",
+            "purpose-tmp": "dočasná",
+            "path": "Cesta",
+            "foldername": "Složka",
+            "recursive": "Rekurzivně",
+            "exists": "Nesmí existovat",
+            "prefix": "Prefix",
+            "mode": "Režim",
+            "property": "Výsledek do"
+        },
+        "error": {
+            "exists": "Složka „%s“ již existuje",
+            "failed-tmp": "Selhalo vytvoření dočasné složky",
+            "failed-reg": "Selhalo vytvoření složky"
+        }
+    },
+    "fs-list": {
+        "status": {
+            "running": "prozkoumává se"
+        },
+        "label": {
+            "name": "Název",
+            "path": "Cesta",
+            "pattern": "Vzor",
+            "filter": "Filtr",
+            "recursive": "Rekurzivně",
+            "follow": "Do odkazů",
+            "property": "Výsledek do"
+        },
+        "error": {
+            "failed": "Získání seznamu položek „%s“ ve složce „%s“ selhalo",
+            "pattern": "Vzor nesmí obsahovat oddělovač složek „%s“",
+            "notfolder": "Zadaná cesta „%s“ není složkou"
+        }
+    },
+    "fs-stats": {
+        "status": {
+            "running": "zjišťuje se"
+        },
+        "label": {
+            "name": "Název",
+            "path": "Cesta",
+            "filename": "Soubor",
+            "attrs": "Atributy",
+            "attr-all": "vše",
+            "attr-basic": "všechny základní",
+            "attr-size": "velikost v bajtech",
+            "attr-kind": "druh",
+            "attr-ctimeu": "časové razítko vytvoření jako unixový čas",
+            "attr-mtimeu": "časové razítko změny jako unixový čas",
+            "attr-atimeu": "časové razítko přístupu jako unixový čas",
+            "attr-ctimes": "časové razítko vytvoření jako řetězec",
+            "attr-mtimes": "časové razítko změny jako řetězec",
+            "attr-atimes": "časové razítko přístupu jako řetězec",
+            "attr-uid": "uid",
+            "attr-gid": "gid",
+            "attr-owner": "vlastník",
+            "attr-group": "skupina",
+            "attr-mode": "režim",
+            "attr-rights": "práva",
+            "attr-mime": "typ mime",
+            "follow": "Odkaz",
+            "property": "Výsledek do"
+        },
+        "error": {
+            "failed": "Získání údajů o souboru „%s“ selhalo"
+        }
+    },
+    "fs-access": {
+        "status": {
+            "running": "testuje se"
+        },
+        "label": {
+            "name": "Název",
+            "path": "Cesta",
+            "filename": "Soubor",
+            "access": "Přístup",
+            "read": "Čtení",
+            "write": "Zápis",
+            "accessible": "přístupné",
+            "non-accessible": "nepřistupné"
+        }
+    }
+}

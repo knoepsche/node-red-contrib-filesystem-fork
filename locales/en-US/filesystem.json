@@ -1,0 +1,145 @@
+{
+    "fs": {
+        "status": {
+            "failed": "failed"
+        },
+        "error": {
+            "sep": ": ",
+            "property": "Unknown property context “%s”"
+        }
+    },
+    "fs-copy-move": {
+        "status": {
+            "running-cp": "copying",
+            "running-mv": "moving",
+            "running-ln": "creating symlink"
+        },
+        "label": {
+            "name": "Name",
+            "oper": "Operation",
+            "oper-copy": "Copy",
+            "oper-move": "Move",
+            "oper-link": "Link",
+            "src-path": "Src Path",
+            "src-filename": "Src Fname",
+            "dst-path": "Dest Path",
+            "dst-filename": "Dest Fname",
+            "overwrite": "Overwrite"
+        },
+        "error": {
+            "empty": "Source can not be empty",
+            "pattern": "Failed to get file list by pattern",
+            "failed-cp": "Coping “%s” failed",
+            "failed-mv": "Moving “%s” failed",
+            "failed-ln": "Creating link to “%s” failed"
+        }
+    },
+    "fs-remove": {
+        "status": {
+            "running": "removing"
+        },
+        "label": {
+            "name": "Name",
+            "path": "Path",
+            "filename": "Filename",
+            "recursive": "Recursive",
+            "exist": "Must Exist"
+        },
+        "error": {
+            "empty": "Target can not be empty",
+            "pattern": "Failed to get file list by pattern",
+            "notexists": "No such file or direcotry “%s”",
+            "failed": "Removing “%s” failed"
+        }
+    },
+    "fs-mkdir": {
+        "status": {
+            "running": "creating"
+        },
+        "label": {
+            "name": "Name",
+            "purpose": "Purpose",
+            "purpose-reg": "regular",
+            "purpose-tmp": "temporary",
+            "path": "Path",
+            "foldername": "Foldername",
+            "recursive": "Recursive",
+            "exists": "Err on Exist",
+            "prefix": "Name Prefix",
+            "mode": "Mode",
+            "property": "Result to"
+        },
+        "error": {
+            "exists": "Folder “%s” already exists",
+            "failed-tmp": "Failed to create the temporary folder",
+            "failed-reg": "Failed to create the folder"
+        }
+    },
+    "fs-list": {
+        "status": {
+            "running": "probing"
+        },
+        "label": {
+            "name": "Name",
+            "path": "Path",
+            "pattern": "Pattern",
+            "filter": "Filter",
+            "recursive": "Recursive",
+            "follow": "Follow Links",
+            "property": "Result to"
+        },
+        "error": {
+            "failed": "Getting list of “%s” items in folder “%s” failed",
+            "pattern": "The pattern can not contain path the separator “%s”",
+            "notfolder": "Provided path “%s” is not folder"
+        }
+    },
+    "fs-stats": {
+        "status": {
+            "running": "getting"
+        },
+        "label": {
+            "name": "Name",
+            "path": "Path",
+            "filename": "Filename",
+            "attrs": "Attributes",
+            "attr-all": "All",
+            "attr-basic": "All basic",
+            "attr-size": "Size in bytes",
+            "attr-kind": "Kind",
+            "attr-ctimeu": "Creation timestamp as unix time",
+            "attr-mtimeu": "Modification timestamp as unix time",
+            "attr-atimeu": "Access timestamp as unixtime",
+            "attr-ctimes": "Creation timestamp as string",
+            "attr-mtimes": "Modification timestamp as string",
+            "attr-atimes": "Access timestamp as string",
+            "attr-uid": "UID",
+            "attr-gid": "GID",
+            "attr-owner": "Owner",
+            "attr-group": "Group",
+            "attr-mode": "Mode",
+            "attr-rights": "Rights",
+            "attr-mime": "MIME Type",
+            "follow": "Follow Links",
+            "property": "Result to"
+        },
+        "error": {
+            "failed": "Getting stat of file “%s” failed"
+        }
+    },
+    "fs-access": {
+        "status": {
+            "running": "testing"
+        },
+        "label": {
+            "name": "Name",
+            "path": "Path",
+            "filename": "Filename",
+            "access": "Access",
+            "read": "Read",
+            "write": "Write",
+            "accessible": "accessible",
+            "non-accessible": "inaccessible"
+        }
+    }
+}

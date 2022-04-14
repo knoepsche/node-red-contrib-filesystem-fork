@@ -1,0 +1,155 @@
+<script type="text/x-red" data-help-name="fs-copy-move">
+    <p>Kopíruje/přesouvá/odkazuje soubory a složky. Umí pracovat jak s jednotlivými soubory, tak s celými stromy složek.</p>
+    <h3>Vstup</h3>
+    <dl class="message-properties">
+        <dt>srcPath <span class="property-type">string</span></dt>
+        <dd>Cesta ke zdrojovému souboru/složce, jenž se má zkopírovat/přesunout/odkázat. Použije se, když je název zdrojového soboru relativní a v tom případě se obě hodnoty spojí dohromady.<br/>V poli <em>Zdr. cesta</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+        <dt>srcFilename <span class="property-type">string</span></dt>
+        <dd>Název zdrojového souboru/složky ke zkopírování/přesunu/odkázání. Může jít o úplnou specifikaci, jak relativní, tak absolutní. Relativní hodnota bude spojena dohromady se zdrojovou cestou.<br/>V poli <em>Zdr. soubor</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+        <dt>destPath <span class="property-type">string</span></dt>
+        <dd>Cílová cesta, kam se má zkopírovat/přesunout nebo kde se má vytvořit odkaz. Použije se, když je název cílového soboru relativní a v tom případě se obě hodnoty spojí dohromady.<br/>V poli <em>Cíl. cesta</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+        <dt>destFilename <span class="property-type">string</span></dt>
+        <dd>Cílový název soubor do kterého se má zkopírovat/přesunout, resp. jak se má jmenovat vytvořený odkaz. Může jít o úplnou specifikaci, jak relativní, tak absolutní. Relativní hodnota bude spojena dohromady s cílovou cestou.<br/>V poli <em>Cíl. soubor</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+    </dl>
+    <h3>Podrobnosti</h3>
+    <p><strong style="color:white;background-color:#ad1625"> ! </strong> V některých případech je třeba výslovně rozlišit soubor a složku. K tomu lze použít oddělovače cest za názvem pro složku. Například na Linuxu: Když kopírujete /foo/doc.txt do /bar/dest, vznikne soubor /bar/dest, ale když do /bar/dest<strong style="color:#ad1625">/</strong>, vznikne soubor /bar/dest/doc.txt.</p>
+    <p>Pokud je zdroj <strong>složka</strong> a cíl je <strong>složka</strong>, bude zdrojová složka včetně celého podstromu zkopírována/přesunuta/odkázána do cílové složky pod původním názvem.</p>
+    <p>Pokud je zdroj <strong>soubor</strong> a cíl je <strong>složka</strong>, bude zdrojový soubor zkopírován/přesunut/odkázán do cílové složky pod svým původním názvem.</p>
+    <p>Pokud je zdroj <strong>soubor</strong> a cíl je <strong>soubor</strong>, bude zdrojový soubor zkopírován/přesunut/odkázán pod novým názvem.</p>
+    <p>Pokud je zdroj <strong>výraz globbing</strong> (název s divokými znaky) a cíl je <strong>složka</strong>, bude všechny vyhovující soubory ze zdrojové složky zkopírován/přesunut/odkázán do cílové složky pod svými původními názvy.</p>
+    <p>Jakékoliv jiné kompbinace typu zdroje a cíle nejsou použitelné.</p>
+    <p>Chybějící složky budou vytvořeny, například když kopírujete soubor do neexistující složky.</p>
+    <p>Pokud není zaškrtnuto <em>Přepsat cíl</em> a cíl již existuje, vyvolá to chybu. Tu můžete zachytit pomocí nodu <em>catch</em>.</p>
+    <p>Odkazy se vytváří pouze symbolické.</p>
+    <p>Pokud je <em>Zdr. soubor</em> (<em>Cíl. soubor</em>) zadaný jako absolutní, bude použit pouze tento údaj. Pokud jako relativní, bude sloučen s položkou <em>Zdr. cesta</em> (<em>Cíl. cesta</em>). Pokud v takovém případě není cesta zadána (nebo je také relativní), použije se aktuální pracovní složka.</p>
+    <h3>Odkazy</h3>
+    <ul>
+        <li>Oficiální <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">dokumentace</a> na Gitlabu.</li>
+    </ul>
+</script>
+
+<script type="text/x-red" data-help-name="fs-remove">
+    <p>Odstraňuje soubory/složky. Umí pracovat rekurzivně.</p>
+    <h3>Vstup</h3>
+    <dl class="message-properties">
+        <dt>path <span class="property-type">string</span></dt>
+        <dd>Cesta k souboru/složce k odstranění. Použije se, když je název soboru relativní a v tom případě se obě hodnoty spojí dohromady.<br/>V poli <em>Cesta</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+        <dt>filename <span class="property-type">string</span></dt>
+        <dd>Název souboru/složky k odstranění. Může jít o úplnou specifikaci, jak relativní, tak absolutní. Relativní hodnota bude spojena dohromady s cestou.<br/>V poli <em>Soubor</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+    </dl>
+    <h3>Podrobnosti</h3>
+    <p>Soubory ke smazaní je možné určit i hromadně zapomocí standardnich výrazů globing (divokých znaků).</p>
+    <p>Pokud není zaškrtnuto <em>Rekurzivně</em> a odstranění vyžaduje odstranit celý strom složek, způsobí to chybu. Tu můžete zachytit pomocí nodu <em>catch</em>.</p>
+    <p>Pokud je zaškrtnuto <em>Musí existovat</em> a cíl neexistuje, způsobí to chybu. Tu můžete zachytit pomocí nodu <em>catch</em>.</p>
+    <p>Pokud je <em>Soubor</em> zadaný jako absolutní, bude použit pouze tento údaj. Pokud jako relativní, bude sloučen s položkou <em>Cesta</em>. Pokud v takovém případě není cesta zadána (nebo je také relativní), použije se aktuální pracovní složka.</p>
+    <h3>Odkazy</h3>
+    <ul>
+        <li>Oficiální <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">dokumentace</a> na Gitlabu.</li>
+    </ul>
+</script>
+
+<script type="text/x-red" data-help-name="fs-mkdir">
+    <p>Vytváří složky. Umí pracovat rekurzivně.</p>
+    <h3>Vstup</h3>
+    <dl class="message-properties">
+        <dt>path <span class="property-type">string</span></dt>
+        <dd>Cesta, kde se má složka vytvořit. Použije se, když je název soboru relativní a v tom případě se obě hodnoty spojí dohromady.<br/>V poli <em>Cesta</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+        <dt>foldername <span class="property-type">string</span></dt>
+        <dd>Název složky, která se má vytvořit. Součástí může být i cesta. Relativní hodnota bude spojena dohromady s cestou.<br/>V poli <em>Složka</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+        <dt>prefix <span class="property-type">string</span></dt>
+        <dd>Předpona názvu dočasné složky, která se má vytvořit. Součástí může být i cesta. Relativní hodnota bude spojena dohromady s cestou. Za předponu bude přidán náhodný řetězec, který zajistí jedinečnost výsledného názvu.<br/>V poli <em>Prefix</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+    </dl>
+    <h3>Výstup</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">string</span></dt>
+        <dd>Výsledná celá cesta; užitečné hlavně pro dočasné složky, které mají generovaný náhodný název.<br/>V poli <em>Výsledek do</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+    </dl>
+    <h3>Podrobnosti</h3>
+    <p>U dočasné složky je vždy zajištěno, že má unikátní náhodně vygenerovaný název, volitelně se zadanou předponou.</p>
+    <p>Pokud není uvedena cesta k dočasné složce, použije se systémová složka pro dočasné soubory.</p>
+    <p>Pokud je zaškrtnuto <em>Nesmí existovat</em> a složka se stejným názvem již existuje, způsobí to chybu. Pokud není zaškrtnuto <em>Rekurzivně</em> a vytváření vyžaduje vytvoření více úrovní složek, způsobí to rovněž chybu. Chby můžete zachytit pomocí nodu <em>catch</em>.</p>
+    <p>Pokud je <em>Složka</em> zadaná jako absolutní, bude použit pouze ten údaj. Pokud jako relativní, bude sloučena s položkou <em>Cesta</em>. Pokud v takovém případě není cesta zadána (nebo je také relativní), použije se aktuální pracovní složka.</p>
+    <h3>Odkazy</h3>
+    <ul>
+        <li>Oficiální <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">dokumentace</a> na Gitlabu.</li>
+    </ul>
+</script>
+
+<script type="text/x-red" data-help-name="fs-list">
+    <p>Vypisuje obsah složky. Výsledky můžete vyfiltrovat pomocí vzoru názvu a pomocí typu (soubory vs. složky).</p>
+    <h3>Vstup</h3>
+    <dl class="message-properties">
+        <dt>path <span class="property-type">string</span></dt>
+        <dd>Cest ke složce, jejíž obsah se má vypsat.<br/>V poli <em>Path</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+        <dt>pattern <span class="property-type">string</span></dt>
+        <dd>Vzor hledaných názvů souborů.<br/>V poli <em>Pattern</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+    </dl>
+    <h3>Výstup</h3>
+    <dl class="message-properties">
+        <dt>list <span class="property-type">array of strings</span></dt>
+        <dd>Seznam nalezených souborů a složek.<br/>V poli <em>Výsledek do</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+    </dl>
+    <h3>Podrobnosti</h3>
+    <p><em>Rekurzivně</em> způsobí prohledání i v podsložkách. Nalezené položky jsou pak v podobě relativních cest vůči prohledávané složce.</p>
+    <p><em>Do odkazů</em> zajistí následování symbolických odkazů.</p>
+    <p>Pamatujte, že volby <em>Rekurzivně</em> a <em>Do odkazů</em> mohou pro rozvětvené stromy vyprodukovat velmi velká pole.</p>
+    <h3>Odkazy</h3>
+    <ul>
+        <li>Oficiální <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">dokumentace</a> na Gitlabu.</li>
+    </ul>
+</script>
+
+<script type="text/x-red" data-help-name="fs-stats">
+    <p>Poskytuje podrobnosti o souboru/složce. Můžete si nechat vrátit všechny údaje, nebo jen jeden vybraný.</p>
+    <h3>Vstup</h3>
+    <dl class="message-properties">
+        <dt>path <span class="property-type">string</span></dt>
+        <dd>Cesta k souboru, pro který se mají zjistit podrobnosti. Použije se, když je název soboru relativní a v tom případě se obě hodnoty spojí dohromady.<br/>V poli <em>Cesta</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+        <dt>filename <span class="property-type">string</span></dt>
+        <dd>Název souboru, pro který se mají zjistit podrobnosti. Může jít o úplnou specifikaci, jak relativní, tak absolutní. Relativní hodnota bude spojena dohromady s cestou.<br/>V poli <em>Soubor</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+    </dl>
+    <h3>Výstup</h3>
+    <dl class="message-properties">
+        <dt>stats <span class="property-type">object or string or number</span></dt>
+        <dd>Obdržíte buď objekt pro všechny atributy, nebo řetězec resp. číslo pro jednotlivý vyžádaný atribut.<br/>V poli <em>Výsledek do</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+    </dl>
+    <h3>Podrobnosti</h3>
+    <p>Volba <em>všechny základní</em> v položce <em>Atributy</em> znamená atributy vrácené přímo funkcí stats(). <em>vše</em> pak přidává navíc pár doplňujících podrobností.</p>
+    <p>Atribut <em>druh</em> může nabýt jedné z hodnot <code>file</code> (běžný soubor), <code>folder</code> (složka), <code>character</code> (znakové zařízení), <code>block</code> (blokové zařízení), <code>pipe</code> (roura), <code>link</code> (odkaz), <code>socket</code> (soket).</p>
+    <p>Časová razítka mají jsou řetězce ve formátu podle standardu ISO 8601, např. 2021-11-18T17:14:58.000Z.</p>
+    <p>Když je zaškrtnuto <em>Odkaz</em>, bude se zkoumat odkazovaný soubor/složka, v opačném případě odkaz samotný.</p>
+    <p>Pokud je <em>Soubor</em> zadaný jako absolutní, bude použit pouze tento údaj. Pokud jako relativní, bude sloučen s položkou <em>Cesta</em>. Pokud v takovém případě není cesta zadána (nebo je také relativní), použije se aktuální pracovní složka.</p>
+    <h3>Odkazy</h3>
+    <ul>
+        <li>Oficiální <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">dokumentace</a> na Gitlabu</li>
+        <li>Popis <a href="https://cs.wikipedia.org/wiki/Typ_internetov%C3%A9ho_m%C3%A9dia">typ MIME</a> na Wikipedii</li>
+        <li>Popis <a href="https://cs.wikipedia.org/wiki/ISO_8601">ISO 8601</a> na Wikipedii</li>
+    </ul>
+</script>
+
+<script type="text/x-red" data-help-name="fs-access">
+    <p>Testuje, zda má vaše flow přístup k souboru/složce, tj. zda ji můžete vidět, číst, měnit.</p>
+    <h3>Vstup</h3>
+    <dl class="message-properties">
+        <dt>path <span class="property-type">string</span></dt>
+        <dd>Cesta k souboru, který se má testovat. Použije se, když je název soboru relativní a v tom případě se obě hodnoty spojí dohromady.<br/>V poli <em>Cesta</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+        <dt>filename <span class="property-type">string</span></dt>
+        <dd>Název souboru, který se má testovat. Může jít o úplnou specifikaci, jak relativní, tak absolutní. Relativní hodnota bude spojena dohromady s cestou.<br/>V poli <em>Soubor</em> je třeba mít nastavený typ <code>msg.</code> a název vlastnosti si pak můžete zvolit.</dd>
+    </dl>
+    <h3>Výstup</h3>
+    <ol class="node-ports">
+         <li>přístupné
+             <div>Nedotčená původní <code>msg</code>, když soubor JE přístupný podle zadaných kritérií..</div>
+         </li>
+         <li>nepřístupné
+             <div>Nedotčená původní <code>msg</code>, když soubor NENÍ přístupný podle zadaných kritérií..</div>
+         </li>
+    </ol>
+    <h3>Odkazy</h3>
+    <p>Přístup pro zápis znamená, že můžete měnit obsah souboru. Přístup pro čtení znamená, že můžete číst obsah souboru. Pokud nemáte zaškrtnutou ani jednu z těchot voleb, bude se zkoumat, jestli můžete vidět přítomnost souboru. U složek znamená přístup pro čtení možnost vypsat obsah složky a přítup pro zápis možnost vytvářet/mazat ve složce.</p>
+    <p>Pokud je <em>Soubor</em> zadaný jako absolutní, bude použit pouze tento údaj. Pokud jako relativní, bude sloučen s položkou <em>Cesta</em>. Pokud v takovém případě není cesta zadána (nebo je také relativní), použije se aktuální pracovní složka.</p>
+    <h3>Odkazy</h3>
+    <ul>
+        <li>Oficiální <a href="https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/tree/1.0.0">dokumentace</a> na Gitlabu.</li>
+    </ul>
+</script>
