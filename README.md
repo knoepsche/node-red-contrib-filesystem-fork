@@ -12,4 +12,6 @@ fs.promises.cp
 
 otherwise everything works as in the original version:
 
+https://www.npmjs.com/package/node-red-contrib-filesystem
+
 https://gitlab.com/advantech-czech/node-red-contrib-filesystem
