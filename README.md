@@ -1,3 +1,15 @@
+#Fork of node-red-contrib-filesystem
+
+The original version gives error messages when copying files. This has been noticed with Node-Red on Windows. This fork fixes the problem:
+
+Here will
+fs.promises.copyFile
+and
+fse.copy
+used
+instead of
+fs.promises.cp
+
 # Filesystem Operations for Node-RED
 
 The node-red-contrib-fs is a set of Node-RED nodes for work with the filesystem. The following nodes are available:
