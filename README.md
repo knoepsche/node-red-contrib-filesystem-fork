@@ -6,7 +6,7 @@ Here will
 fs.promises.copyFile
 and
 fse.copy
-used
+be used
 instead of
 fs.promises.cp
 
