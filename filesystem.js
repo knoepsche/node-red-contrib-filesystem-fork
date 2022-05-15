@@ -72,15 +72,13 @@ module.exports = function (RED) {
                       return new Promise((resolve, reject) => {
                           fs.promises.stat(src).then((stat) => {
                               if (stat.isDirectory()) {
-                                  let newdir = path.join(dst, path.basename(src));
-                                  fse.emptyDir(newdir)
-                                      .then(() => fs.promises.cp(src, newdir, {force: overwrite, errorOnExist: !overwrite, recursive: true}))
+									fse.copy(src, dst, {overwrite:overwrite, errorOnExist:true})
                                       .then(() => resolve())
                                       .catch((e) => reject(e));
                               } else {
                                   if (dst.slice(-1) === path.sep)
                                       dst = path.join(dst, path.basename(src));
-                                  fs.promises.cp(src, dst, {force: overwrite, errorOnExist: !overwrite, recursive: true})
+                                  fs.promises.copyFile(src, dst, overwrite?0:fs.constants.COPYFILE_EXCL)
                                       .then(() => resolve())
                                       .catch((e) => reject(e));
                               }
