@@ -1,4 +1,4 @@
-# Fork of node-red-contrib-filesystem
+# node-red-contrib-filesystem-fork
 
 The original version gives error messages when copying files. This has been noticed with Node-Red on Windows. This fork fixes the problem:
 
