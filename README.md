@@ -10,6 +10,8 @@ used
 instead of
 fs.promises.cp
 
+otherwise everything works as in the original version:
+!https://gitlab.com/advantech-czech/node-red-contrib-filesystem
 # Filesystem Operations for Node-RED
 
 The node-red-contrib-fs is a set of Node-RED nodes for work with the filesystem. The following nodes are available:
