@@ -1,7 +1,7 @@
 {
-    "name": "node-red-contrib-filesystem-fork",
+    "name": "@knoepsche/node-red-contrib-filesystem-fork",
     "version": "1.0.0",
-    "description": "Node-RED nodes to work with filesystem. You can copy, move, link, delete files, create, list and remove folders and get info.",
+    "description": "Node-RED nodes to work with filesystem. You can copy, move, link, delete files, create, list and remove folders and get info. This is a fork to work with fs.promise",
     "node-red": {
         "nodes": {
             "filesystem": "filesystem.js"
