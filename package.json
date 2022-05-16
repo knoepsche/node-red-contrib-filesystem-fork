@@ -1,5 +1,5 @@
 {
-    "name": "node-red-contrib-filesystem",
+    "name": "node-red-contrib-filesystem-fork",
     "version": "1.0.0",
     "description": "Node-RED nodes to work with filesystem. You can copy, move, link, delete files, create, list and remove folders and get info.",
     "node-red": {
@@ -28,12 +28,15 @@
         "stat"
     ],
     "author": "Marek Černocký <marek.cernocky@advantech.com>",
+    "contributors": [{
+        "name": "Andreas Knop",
+        "email": "a_knop@web.de"
+      }],
     "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://gitlab.com/advantech-czech/node-red-contrib-filesystem.git"
     },
-    "bugs": "https://gitlab.com/advantech-czech/node-red-contrib-filesystem/-/issues",
     "homepage": "https://gitlab.com/advantech-czech/node-red-contrib-filesystem",
     "engines": {
         "node": ">= 14.0.0"
