@@ -35,9 +35,9 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://gitlab.com/advantech-czech/node-red-contrib-filesystem.git"
+        "url": "https://github.com/knoepsche/node-red-contrib-filesystem-fork.git"
     },
-    "homepage": "https://gitlab.com/advantech-czech/node-red-contrib-filesystem",
+    "homepage": "https://github.com/knoepsche/node-red-contrib-filesystem-fork",
     "engines": {
         "node": ">= 14.0.0"
     }
